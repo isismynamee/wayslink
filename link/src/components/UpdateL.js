@@ -39,10 +39,10 @@ export const UpdateL = () => {
         <div>
           <h3 className='position-absolute my-2 top-0'>Template</h3>
         </div>
+            <form onSubmit={submitL}>
             <img className='position-absolute h-75 end-0 my-5 pt-5 me-5' src={img} alt="Phone" />
                 <h3>Create Link</h3>
               <div className='bg-light w-50'>
-            <form onSubmit={submitL}>
                 <div className='d-grid mx-2'>
                   <p className='pt-3'>Title</p>
                   <input className='p-1 mx-2 border-start-0 border-end-0 border-top-0 border-dark border-1 my-2' type="text" name="title" onChange={changeL} />
@@ -50,8 +50,8 @@ export const UpdateL = () => {
                   <input className='p-1 mx-2 border-start-0 border-end-0 border-top-0 border-dark border-1 my-2' type="text" name="description" onChange={changeL} />
                 </div>
               <button className='btn btn-warning rounded done' type="submit">Publish Link</button>
-            </form>
               </div>
+            </form>
             <UpdatingL />
       </div>
     )

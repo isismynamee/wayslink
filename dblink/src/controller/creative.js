@@ -134,7 +134,14 @@ exports.updateCreative = async (req, res) =>{
     try {
         const {id} = req.params
 
-        await creative.update(req.body, {
+        const data = {
+            title: req?.body?.title,
+            description: req?.body?.description,
+            // idLink: req?.body?.idLink,
+            image: req?.file?.filename
+        }
+
+        await creative.update(data, {
             where: { 
                 id
             },
@@ -143,37 +150,18 @@ exports.updateCreative = async (req, res) =>{
             }
         })
 
-        const dont = await creative.findOne({
-            where: { 
-                id
-            },
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            },
-            include: [{
-                model: link,
-                as: "link",
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt', 'uniquelink']
-                },
-                include: [{
-                    model: user,
-                    as: "user",
-                    attributes: {
-                        exclude: ['createdAt', 'updatedAt', 'phone', 'password']
-                    }
-                }]
-            }]
-        })
-
         res.send({
             status: 'Success',
-            data: dont
+            data: {
+                id,
+                data,
+                image: req?.file?.filename
+            }
         })
     } catch (error) {
         res.send({
             status: 'Error',
-            message: (error.message)
+            message: (error)
         })
         
     }

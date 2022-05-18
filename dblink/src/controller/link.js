@@ -121,7 +121,13 @@ exports.updatelink = async (req, res) =>{
     try {
         const {id} = req.params
 
-        await link.update(req.body, {
+        const data = {
+            title: req?.body?.title,
+            url: req?.body?.url,
+            image: req?.file?.filename
+        }
+
+        await link.update(data, {
             where: { 
                 id
             },
@@ -130,25 +136,13 @@ exports.updatelink = async (req, res) =>{
             }
         })
 
-        const dont = await link.findOne({
-            where: { 
-                id
-            },
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            },
-            include: [{
-                model: user,
-                as: "user",
-                attributes: {
-                    exclude: ['updatedAt', 'createdAt', 'password', 'phone']
-                }
-            }]
-        })
-
         res.send({
             status: 'Success',
-            data: dont
+            data: {
+                id,
+                data,
+                image: req?.file?.filename
+            }
         })
     } catch (error) {
         res.send({
