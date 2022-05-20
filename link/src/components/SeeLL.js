@@ -29,7 +29,6 @@ export const SeeLL = () => {
 
     useEffect(() =>{
         getCreat()
-        // getLinks();
     }, [])
     
     const [show, setShow] = useState(false);
@@ -47,7 +46,7 @@ export const SeeLL = () => {
 
     const deleteCreat = async (id) => {
         try {
-            await API.get(`/creative/${id}`)
+            await API.delete(`/creative/${id}`)
             getCreat()
         } catch (error) {
             console.log(error)
